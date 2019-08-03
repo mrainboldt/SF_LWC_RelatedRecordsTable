@@ -6,6 +6,7 @@
     <members>FieldSet</members>
     <members>FieldSetMap</members>
     <members>LightningController</members>
+    <members>LightningControllerTest</members>
     <members>LightningTableController</members>
     <members>LightningTableControllerTest</members>
     <members>TableWrapper</members>
