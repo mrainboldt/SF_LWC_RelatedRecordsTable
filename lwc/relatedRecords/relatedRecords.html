@@ -1,29 +1,20 @@
 <template>
-    <!-- <template for:each={records.data} for:item="record">
-        <lightning-layout key={record.Id}>
-            <lightning-layout-item>
-                <a
-                    href="#"
-                    key={record.Id}
-                    data-record-id={record.Id}
-                    onclick={handleSelect}
-                >
-                {record.Name}
-                </a>
-            </lightning-layout-item>
-            <template for:each={fields.data} for:item="field">
-                <lightning-layout-item key={field.name}>
-                    <p>{field.name}</p>
-                </lightning-layout-item>
-            </template>
-        </lightning-layout>
-    </template> -->
     <div style="width:100%;" class="slds-card_boundary related_list_card_border_top">
         <div class="related_list_themed_border_top"></div>
         <lightning-card icon-name={icon} >
             <span slot="title" class="slds-card__header-title slds-card__header-link">
                 {label} ({totalNumberOfRows})
+                
             </span>
+            <!-- <lightning-button-icon icon-name="utility:refresh"
+                                    tooltip="Refresh Records"
+                                    alternative-text="Refresh Records"
+                                    onclick={getRefreshRecords}
+                                    slot="actions">
+            </lightning-button-icon> -->
+            <!-- <template for:each={records} for:item="rec">
+                <li key={rec.Id}>{rec.Account.Name}</li>
+            </template> -->
             <template if:true={records}>
                 <div class="slds-card__body slds-card__body--inner">
                     <lightning-datatable

@@ -16,4 +16,10 @@ public with sharing class LightningTableController {
 
         return table;
     }
+
+    @AuraEnabled
+    public static List<SObject> refreshRecords(TableWrapper table)
+    {
+        return table.refreshRecords();
+    }
 }

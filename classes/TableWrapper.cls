@@ -30,7 +30,7 @@ public class TableWrapper {
         this.fieldSOQL = LightningController.getFieldSOQL(columns);
         this.whereClause = String.isBlank(whereClause) ? ' WHERE ' : ' WHERE ' + whereClause + ' AND '; 
         this.whereClause += relatedField + ' = \'' + recordId + '\'';
-        this.records = LightningController.querySObjects(this.getQuery());
+        this.records = this.refreshRecords();
         this.rowCount = this.records != null && !this.records.isEmpty() ? this.records.size() : 0;
     }
 
@@ -42,5 +42,10 @@ public class TableWrapper {
         query += whereClause;
 
         return query;
+    }
+
+    public List<SObject> refreshRecords()
+    {
+        return LightningController.querySObjects(this.getQuery());
     }
 }

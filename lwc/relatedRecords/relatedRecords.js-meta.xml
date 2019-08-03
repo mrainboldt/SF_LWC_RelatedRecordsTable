@@ -7,40 +7,14 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
-            <property label="Related List Label"
-                    name="label" 
-                    type="String"  
-                    required="true"
-                    description="The name that will appear at the top of the list."
-            />
-            <property label="Related Object API Name"
-                    name="relatedObject" 
-                    type="String"  
-                    required="true"
-                    description="The API name of the object you want to display."
-            />
-            <property label="Related Field"
-                    name="relatedField" 
-                    type="String"  
-                    required="true"
-                    description="API name of the field that this object is set."
-            />
-            <property label="Field Set"
-                    name="fieldSet" 
-                    type="String"  
-                    required="true"
-                    description="Api name of the field set to use."
-            />
-            <property label="WHERE clause"
-                    name="where_clause" 
-                    type="String"
-                    description="WHERE clause for query, do not include related field"
-            />
-            <property label="Icon"
-                    name="icon" 
-                    type="String" 
-                    description="SLDS Icon name to display."
-            />            
+            <property label="Related List Label" name="label" type="String" required="true" description="The name that will appear at the top of the list."/>
+            <property label="Related Object API Name" name="relatedObject" type="String" required="true" description="The API name of the object you want to display."/>
+            <property label="Related Field" name="relatedField" type="String" required="true" description="API name of the field that this object is set."/>
+            <property label="Field Set" name="fieldSet" type="String" required="true" description="Api name of the field set to use."/>
+            <property label="WHERE clause" name="where_clause" type="String" description="WHERE clause for query, do not include related field"/>
+            <property label="Icon" name="icon" type="String" description="SLDS Icon name to display."/>
+            <property label="Sort By" name="sortedBy" type="String" description="Default field to sort by, make sure field is included in field set."/>
+            <property label="Sort Direction" name="sortDirection" type="String" description="Direction to sort field." default="" datasource=",asc,desc"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

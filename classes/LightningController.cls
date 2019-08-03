@@ -34,6 +34,12 @@ public with sharing class LightningController {
         for(Column fs: fields)
         {
             fieldSOQL += ', ' + fs.fieldName;
+            // if(fs.isReferenceField)
+            // {
+            //     String relatedField = fs.fieldName.replace('__c', '__r') + '.Name';
+            //     relatedField = relatedField.replace('Id.', '.');
+            //     fieldSOQL += ', ' + relatedField;
+            // }
         }
         System.debug(fieldSOQL);
 

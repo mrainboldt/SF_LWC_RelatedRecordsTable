@@ -1,6 +1,7 @@
 import { LightningElement, wire, api, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import initTable from '@salesforce/apex/LightningTableController.initTable';
+import refreshRecords from '@salesforce/apex/LightningTableController.refreshRecords';
 import no_records from '@salesforce/label/c.RelatedRecords_Table_No_Records_Message';
 
 const actions = [{label: 'View', name:'viewRecord'}];
@@ -14,6 +15,8 @@ export default class RelatedRecords extends NavigationMixin(LightningElement)
     @api icon;
     @api fieldSet;
     @api where_clause = '';
+    @api sortDirection;
+    @api sortedBy;
 
     @api objectApiName;
     @api inlineEdit = false;
@@ -22,8 +25,6 @@ export default class RelatedRecords extends NavigationMixin(LightningElement)
     @track records;
     @track loadMoreStatus;
     @track totalNumberOfRows = 0;
-    @track sortDirection;
-    @track sortedBy;
     @track table;
     
     @api labels = {
@@ -42,7 +43,12 @@ export default class RelatedRecords extends NavigationMixin(LightningElement)
             if(data)
             {
                 this.table = JSON.parse(JSON.stringify(data));
-                this.records = this.table && this.table.rowCount > 0 ? JSON.parse(JSON.stringify(this.table.records)) : undefined;
+                //this.records = this.table && this.table.rowCount > 0 ? JSON.parse(JSON.stringify(this.table.records)) : undefined;
+                if(this.table && this.table.rowCount > 0 )
+                {
+                    var sortedData = this.sortData(this.sortedBy, this.sortDirection, this.table.records);
+                    this.records = JSON.parse(JSON.stringify(sortedData));
+                }
                 this.totalNumberOfRows = this.table ? this.table.rowCount : 0;
                 this.columns = this.table.columns;
                 this.columns.push({ type: 'action', typeAttributes: { rowActions: actions, menuAlignment: 'right' } })
@@ -55,6 +61,16 @@ export default class RelatedRecords extends NavigationMixin(LightningElement)
             }
             
         }
+
+    getRefreshRecords(event)
+    {
+        debugger;
+        refreshRecords({table: '$table'})
+        .then(result =>{
+            debugger;
+            this.records = result;
+        })
+    }
 
     getSelectedName(event) {
         // var selectedRows = event.detail.selectedRows;
@@ -188,12 +204,17 @@ export default class RelatedRecords extends NavigationMixin(LightningElement)
             this.sortedBy = event.detail.fieldName;
             this.sortDirection = event.detail.sortDirection; 
             //this.records = this.sortData(this.sortedBy, this.sortDirection, this.records); 
-            const data = sortData(this.sortedBy, this.sortDirection, this.records);
+            const data = this.sortData(this.sortedBy, this.sortDirection, this.records);
             this.records = JSON.parse(JSON.stringify(data));
        }
 
        sortData = function(sortBy, sortDirection, data)
        {
+            if(!sortBy || !sortDirection)
+            {
+                return data;
+            }
+
             //function to return the value stored in the field
             var key = function(a) { return a[sortBy]; }
             var reverse = sortDirection === 'asc' ? 1: -1;
